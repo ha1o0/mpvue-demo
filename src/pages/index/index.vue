@@ -15,6 +15,7 @@
 
     <div class="test">
       <button @click="testClick">request</button>
+      <button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">获取用户信息</button>
     </div>
 
     <form class="form-container">
@@ -26,19 +27,13 @@
 
 <script>
 import card from '@/components/card'
-// var Fly = require("@/utils/wx") //wx.js为您下载的源码文件
-var Fly=require("flyio/dist/npm/wx") //npm引入方式
-var fly = new Fly(); //创建fly实例
 
 // fly.interceptors.request.use((config,promise)=>{
 //     //给所有请求添加自定义header
 //     config.headers["X-Tag"]="flyio";
 //     return config;
 // })
-//配置请求基地址
-fly.config.baseURL="https://virtserver.swaggerhub.com/weifengsmile/test/1.0.0/"
 
-console.log(fly)
 export default {
   data () {
     return {
@@ -57,9 +52,28 @@ export default {
       wx.navigateTo({ url })
     },
     testClick () {
-      fly.get("inventory").then((d) => {
-        console.log(d)
+      this.$flyio.get("inventory").then((d) => {
+        console.log(d.data)
       })
+  
+      // wx.chooseImage({
+      //   success (res) {
+      //     const tempFilePaths = res.tempFilePaths
+      //     console.log(tempFilePaths)
+      //     wx.uploadFile({
+      //       url: 'https://example.weixin.qq.com/upload', //仅为示例，非真实的接口地址
+      //       filePath: tempFilePaths[0],
+      //       name: 'file',
+      //       formData: {
+      //         'user': 'test'
+      //       },
+      //       success (res){
+      //         const data = res.data
+      //         //do something
+      //       }
+      //     })
+      //   }
+      // })
     },
     getUserInfo () {
       // 调用登录接口
