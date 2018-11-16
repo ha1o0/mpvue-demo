@@ -4,8 +4,8 @@
     <!-- <van-button bind:click="handleClick" type="primary">Primary</van-button> -->
     <van-search :v-bind="value" placeholder="请输入CAS号/产品名称" class="search"></van-search>
       <van-tabs :active='currentCategory' class="tabs" @change="changeCategory">
-        <swiper v-bind:style="{ heigh: swiperHeight + 'rpx' }" :current='currentCategory' :indicator-dots='swipeDot' duration="200" @change="swiperTab" class="swiper">
-        <van-tab v-bind:style="{ heigh: swiperHeight + 'rpx' }" v-for="(category, categoryIndex) in categories" :key='categoryIndex' :title='category' class="category-tab" >
+        <swiper v-bind:style="{ height: getSwiperHeight + 'px' }" :current='currentCategory' :indicator-dots='swipeDot' duration="200" @change="swiperTab" class="swiper">
+        <van-tab v-for="(category, categoryIndex) in categories" :key='categoryIndex' :title='category' class="category-tab" >
         <swiper-item>
         <div v-for="(product, productIndex) in currentItems" :key='productIndex' class="product">
           <van-card
@@ -44,7 +44,7 @@ export default {
       singleItem: {id: "1", cas: "872-50-4", posterSrc: "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3769537293,3873568774&fm=11&gp=0.jpg", nameEn: "1-Methyl-2-pyrrolidinone", nameCn: "N-甲基吡络烷酮"},
       currentItems: [],
       currentCategory: 0,
-      swiperHeight: 0
+      minSwiperHeight: 400
     }
   },
 
@@ -63,7 +63,7 @@ export default {
     },
     getProducts(index, categoryTitle) {
       Toast.loading({
-        mask: true,
+        mask: false,
         message: '加载中...'
       })
       this.currentItems = []
@@ -71,10 +71,8 @@ export default {
         this.currentItems.push(this.singleItem)
       }
       this.currentCategory = index
-      this.swiperHeight = this.currentItems.length * 110
-      console.log(this.swiperHeight)
       wx.setNavigationBarTitle({
-        title: "巴斯夫产品-" + categoryTitle
+        title: "产品-" + categoryTitle
       })
       Toast.clear()
     },
@@ -122,15 +120,18 @@ export default {
       console.log('clickHandle:', msg, ev)
     }
   },
-
+  computed: {
+    getSwiperHeight () {
+      let itemsNumber = this.currentItems.length
+      return itemsNumber > 3 ? itemsNumber * 110 : this.minSwiperHeight
+    }
+  },
   created () {
     // 调用应用实例的方法获取全局数据
     this.getUserInfo()
     this.currentItems.push(this.singleItem)
-    this.swiperHeight = this.currentItems.length * 110
-    console.log(this.swiperHeight)
     wx.setNavigationBarTitle({
-      title: "巴斯夫产品-" + this.categories[0]
+      title: "产品-" + this.categories[0]
     })
   }
 }
