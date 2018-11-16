@@ -1,23 +1,21 @@
 <template>
   <div class="container">
-    <!-- <i-switch value=true bind:change="onChange" slot="footer"></i-switch> -->
-    <!-- <van-button bind:click="handleClick" type="primary">Primary</van-button> -->
     <van-search :v-bind="value" placeholder="请输入CAS号/产品名称" class="search"></van-search>
-      <van-tabs :active='currentCategory' class="tabs" @change="changeCategory">
-        <swiper v-bind:style="{ height: getSwiperHeight + 'px' }" :current='currentCategory' :indicator-dots='swipeDot' duration="200" @change="swiperTab" class="swiper">
-        <van-tab v-for="(category, categoryIndex) in categories" :key='categoryIndex' :title='category' class="category-tab" >
-        <swiper-item>
-        <div v-for="(product, productIndex) in currentItems" :key='productIndex' class="product">
-          <van-card
-            :desc='product.nameEn'
-            :title='product.nameCn'
-            :thumb='product.posterSrc'
-          />
-        </div>
-        </swiper-item>
-        </van-tab>
-        </swiper>
-      </van-tabs>
+    <van-tabs :active='currentCategory' class="tabs" @change="changeCategory">
+      <swiper v-bind:style="{ height: getSwiperHeight + 'px' }" :current='currentCategory' :indicator-dots='swipeDot' duration="200" @change="swiperTab" class="swiper">
+      <van-tab v-for="(category, categoryIndex) in categories" :key='categoryIndex' :title='category' class="category-tab" >
+      <swiper-item>
+      <div v-for="(product, productIndex) in currentItems" :key='productIndex' class="product">
+        <van-card
+          :desc='product.nameEn'
+          :title='product.nameCn'
+          :thumb='product.posterSrc'
+        />
+      </div>
+      </swiper-item>
+      </van-tab>
+      </swiper>
+    </van-tabs>
 
     <van-toast id="van-toast" />
   </div>
@@ -26,12 +24,6 @@
 <script>
 import card from '@/components/card'
 import Toast from '@/../static/vant/toast/toast'
-// fly.interceptors.request.use((config,promise)=>{
-//     //给所有请求添加自定义header
-//     config.headers["X-Tag"]="flyio";
-//     return config;
-// })
-
 export default {
   data () {
     return {

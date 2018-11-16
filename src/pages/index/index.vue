@@ -1,100 +1,38 @@
 <template>
-  <div class="container" @click="clickHandle('test click', $event)">
-    <div class="userinfo" @click="bindViewTap">
-      <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
-      <div class="userinfo-nickname">
-        <card :text="userInfo.nickName"></card>
-      </div>
-    </div>
+  <div class="container">
+    <van-search :v-bind="value" placeholder="请输入CAS号/产品名称" class="search"></van-search>
+    <van-tabs :active='currentCategory' class="tabs" @change="changeCategory">
+      <van-tab v-for="(category, categoryIndex) in categories" :key='categoryIndex' :title='category' class="category-tab" >
+      </van-tab>
+    </van-tabs>
 
-    <div class="usermotto">
-      <div class="user-motto">
-        <card :text="motto"></card>
-      </div>
-    </div>
-
-    <div class="test">
-      <button @click="testClick">request</button>
-      <button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">获取用户信息</button>
-    </div>
-
-    <form class="form-container">
-      <input type="text" class="form-control" v-model="motto" placeholder="v-model" />
-      <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
-    </form>
+    <van-toast id="van-toast" />
   </div>
 </template>
 
 <script>
-import card from '@/components/card'
-
-// fly.interceptors.request.use((config,promise)=>{
-//     //给所有请求添加自定义header
-//     config.headers["X-Tag"]="flyio";
-//     return config;
-// })
-
 export default {
   data () {
     return {
-      motto: 'Hello',
-      userInfo: {}
+      categories: ["化学品", "建筑", "电子电气", "能源与资源", "家居护理与工业", "生物试剂", "服装工业"],
+      subCategories: [["化学品1", "化学品2", "化学品3"], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""]],
+      currentItems: [],
+      currentCategory: 0,
     }
   },
-
-  components: {
-    card
-  },
-
   methods: {
-    bindViewTap () {
-      const url = '../logs/main'
-      wx.navigateTo({ url })
-    },
     testClick () {
       this.$flyio.get("inventory").then((d) => {
         console.log(d.data)
       })
-  
-      // wx.chooseImage({
-      //   success (res) {
-      //     const tempFilePaths = res.tempFilePaths
-      //     console.log(tempFilePaths)
-      //     wx.uploadFile({
-      //       url: 'https://example.weixin.qq.com/upload', //仅为示例，非真实的接口地址
-      //       filePath: tempFilePaths[0],
-      //       name: 'file',
-      //       formData: {
-      //         'user': 'test'
-      //       },
-      //       success (res){
-      //         const data = res.data
-      //         //do something
-      //       }
-      //     })
-      //   }
-      // })
     },
-    getUserInfo () {
-      // 调用登录接口
-      wx.login({
-        success: () => {
-          wx.getUserInfo({
-            success: (res) => {
-              this.userInfo = res.userInfo
-            }
-          })
-        }
-      })
+    changeCategory (e) {
+      this.getProducts(e.mp.detail.index, e.mp.detail.title)
     },
-    clickHandle (msg, ev) {
-      console.log('clickHandle:', msg, ev)
-    }
   },
 
   created () {
-    // 调用应用实例的方法获取全局数据
-    this.getUserInfo()
+
   }
 }
 </script>
