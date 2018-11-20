@@ -2,17 +2,21 @@
   <div class="container">
     <van-search :v-bind="value" placeholder="请输入CAS号/产品名称" class="search"></van-search>
     <van-tabs :active='currentCategory' class="tabs" @change="changeCategory">
-      <swiper v-bind:style="{ height: getSwiperHeight + 'px' }" :current='currentCategory' :indicator-dots='swipeDot' duration="200" @change="swiperTab" class="swiper">
+      <swiper :style="{ height: getSwiperHeight + 'px' }" :current='currentCategory' :indicator-dots='swipeDot' duration="200" @change="swiperTab" class="swiper">
       <van-tab v-for="(category, categoryIndex) in categories" :key='categoryIndex' :title='category' class="category-tab" >
+      
       <swiper-item>
-      <div v-for="(product, productIndex) in currentItems" :key='productIndex' class="product">
-        <van-card
-          :desc='product.nameEn'
-          :title='product.nameCn'
-          :thumb='product.posterSrc'
-        />
-      </div>
+      <scroll-view scroll-y="true" style="height: 100%;">
+        <div v-for="(product, productIndex) in currentItems" :key='productIndex' class="product">
+          <van-card
+            :desc='product.nameEn'
+            :title='product.nameCn'
+            :thumb='product.posterSrc'
+          />
+        </div>
+      </scroll-view>
       </swiper-item>
+
       </van-tab>
       </swiper>
     </van-tabs>
@@ -36,7 +40,7 @@ export default {
       singleItem: {id: "1", cas: "872-50-4", posterSrc: "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3769537293,3873568774&fm=11&gp=0.jpg", nameEn: "1-Methyl-2-pyrrolidinone", nameCn: "N-甲基吡络烷酮"},
       currentItems: [],
       currentCategory: 0,
-      minSwiperHeight: 400
+      minSwiperHeight: 520
     }
   },
 
@@ -115,10 +119,11 @@ export default {
   computed: {
     getSwiperHeight () {
       let itemsNumber = this.currentItems.length
-      return itemsNumber > 3 ? itemsNumber * 110 : this.minSwiperHeight
+      // return itemsNumber > 3 ? itemsNumber * 110 : this.minSwiperHeight
+      return this.minSwiperHeight
     }
   },
-  created () {
+  mounted () {
     // 调用应用实例的方法获取全局数据
     this.getUserInfo()
     this.currentItems.push(this.singleItem)

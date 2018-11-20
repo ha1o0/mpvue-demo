@@ -1,0 +1,42 @@
+
+.search {
+  width: 100%;
+  margin-top: 0;
+}
+
+.tabs {
+  &:extend(.search);
+  .category-tab {
+    width: 60rpx;
+  }
+  .category-container {
+    display: flex;
+    .sub-category-col {
+      height: 520px;
+      border-right: 1px solid #EDEDED;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      // align-items: center;
+      text-align: center;
+      .sub-category-cell {
+        margin: 20rpx 5rpx;
+        font-size: 12px;
+      }
+    }
+    .detail-category-col {
+      flex: 3;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      .detail-category-cell {
+        margin: 20rpx 20rpx;
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+

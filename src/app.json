@@ -1,7 +1,7 @@
 {
     "pages": [
         "pages/home/main",
-        "pages/index/main",
+        "pages/category/main",
         "pages/cart/main",
         "pages/logs/main"
     ],
@@ -22,7 +22,7 @@
             "selectedIconPath": "./static/images/home_fill1.png"
           },
           {
-            "pagePath": "pages/index/main",
+            "pagePath": "pages/category/main",
             "text": "分类",
             "iconPath": "./static/images/apps.png",
             "selectedIconPath": "./static/images/apps1.png"

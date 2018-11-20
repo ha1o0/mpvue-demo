@@ -4,6 +4,8 @@
         "van-search": "/static/vant/search/index",
         "van-tab": "/static/vant/tab/index",
         "van-tabs": "/static/vant/tabs/index",
-        "van-toast": "/static/vant/toast/index"
+        "van-toast": "/static/vant/toast/index",
+        "van-row": "/static/vant/row/index",
+        "van-col": "/static/vant/col/index"
     }
 }

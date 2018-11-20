@@ -53,7 +53,7 @@ export default {
         this.currentItems.push(this.singleItem)
       }
       wx.setNavigationBarTitle({
-        title: "巴斯夫产品-" + e.mp.detail.title
+        title: "产品-" + e.mp.detail.title
       })
       Toast.clear()
     },
@@ -102,12 +102,12 @@ export default {
     }
   },
 
-  created () {
+  mounted () {
     // 调用应用实例的方法获取全局数据
     this.getUserInfo()
     this.currentItems.push(this.singleItem)
     wx.setNavigationBarTitle({
-      title: "巴斯夫产品-" + this.categories[0]
+      title: "产品-" + this.categories[0]
     })
   }
 }
